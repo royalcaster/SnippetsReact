@@ -30,9 +30,12 @@ class Card extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: "Neue Karte",
+      date: "31. 10. 2002",
       renamed: false
     }
     this.toggleRename = this.toggleRename.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   toggleRename() {
     const { renamed } = this.state;
@@ -41,12 +44,20 @@ class Card extends React.Component {
       renamed: !renamed
     });
   }
+  handleChange(evt) {
+    this.setState({
+      title: evt.target.value,
+    });
+  }
   render (){
     return <div className="card_container">
-      {this.state.renamed ? <RenameOverlay></RenameOverlay> : null}
+      {this.state.renamed ? 
+      <div className="rename_overlay_container">
+        <input value={this.state.title} onChange={this.handleChange} placeholder="Neuer Titel..." className="rename_input" spellCheck="false"></input>
+      </div> : null}
       <button className="card_entry_button"><i className="material-icons entry_icon">&#xe5da;</i></button>
-      <p className="card_title">{this.props.title}</p>
-      <p className="card_date">{this.props.date}</p>
+      <p className="card_title">{this.state.title}</p>
+      <p className="card_date">{this.state.date}</p>
       <button className="card_button"><i className="material-icons card_button_icon red">&#xe872;</i></button>
       {this.state.renamed ? <button className="card_button" onClick={this.toggleRename}><i className="material-icons card_button_icon green">&#xe5ca;</i></button>
       : <button className="card_button" onClick={this.toggleRename}><i className="material-icons card_button_icon">&#xe3c9;</i></button>}
@@ -54,16 +65,6 @@ class Card extends React.Component {
     </div>
   };
 }
-
-function RenameOverlay() {  
-    
-  return (
-  <div className="rename_overlay_container">
-    <input placeholder="Neuer Titel..." className="rename_input" spellCheck="false"></input>
-  </div>);
-}
-
-
 
 function AddCard(){
   return (
