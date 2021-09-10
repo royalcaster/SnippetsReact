@@ -1,8 +1,18 @@
 import './Layout.css';
 import React from 'react';
 
-function Layout() {
-  return (
+class Layout extends React.Component {
+  constructor(props){
+    super(props);
+  }
+  render() {
+    const cards = [];
+
+    for (let i = 0; i<cards.length; i++) {
+      cards.push(<Card id={i} title={"Arbeitsplatz " + i} date={new Date()}></Card>);
+    }
+
+    return (
     <div className="Body">
       <div className="Navbar">
         <MainTitle></MainTitle>
@@ -12,10 +22,11 @@ function Layout() {
       <div className="Content">
         <div className="filler"></div>
         <AddCard />
-        <Card title="Testkarte 1" date="31. 10. 2002"></Card>
+        {cards}
       </div>
     </div>
   );
+  }
 }
 
 function MainTitle(){
