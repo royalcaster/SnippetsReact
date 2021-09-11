@@ -1,27 +1,32 @@
 import './Layout.css';
 import React from 'react';
 
+const workplace_data = new Map();
+
 class Layout extends React.Component {
-  constructor(props){
-    super(props);
+  addCard() {
+    workplace_data.set(workplace_data.size+1,[workplace_data.size+1,"Arbeitsplatz " + (workplace_data.size+1), new Date()]);
+    console.log(workplace_data.get(workplace_data.size)[2]);
   }
   render() {
     const cards = [];
 
-    for (let i = 0; i<cards.length; i++) {
-      cards.push(<Card id={i} title={"Arbeitsplatz " + i} date={new Date()}></Card>);
+    for (let i = 0; i <workplace_data.size; i++) {
+      cards.push(<Card id={workplace_data.get(i+1)[0]} title={workplace_data.get(i+1)[1]} date={workplace_data.get(i+1)[2]}></Card>);
     }
 
     return (
     <div className="Body">
       <div className="Navbar">
         <MainTitle></MainTitle>
-        <NavbarLink lable="Abmelden" icon="&#xe879;"></NavbarLink>
-        <NavbarLink lable="Account" icon="&#xe853;"></NavbarLink>
+        <NavbarLink url="www.youtube.com" lable="Abmelden" icon="&#xe879;"></NavbarLink>
+        <NavbarLink url="www.youtube.com" lable="Account" icon="&#xe853;"></NavbarLink>
       </div>
       <div className="Content">
         <div className="filler"></div>
-        <AddCard />
+        <div className="card_container card_add" onClick={this.addCard}>
+          <i className="material-icons add_icon">&#xe145;</i>
+        </div>
         {cards}
       </div>
     </div>
@@ -34,15 +39,15 @@ function MainTitle(){
 }
 
 function NavbarLink(props) {
-  return <a className="navbar_links"><i className="material-icons navbar_icon">{props.icon}</i>&nbsp;{props.lable}</a>;
+  return <a href={props.url} className="navbar_links"><i className="material-icons navbar_icon">{props.icon}</i>&nbsp;{props.lable}</a>;
 }
 
 class Card extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "Neue Karte",
-      date: "31. 10. 2002",
+      title: this.props.title,
+      date: this.props.date,
       renamed: false
     }
     this.toggleRename = this.toggleRename.bind(this);
@@ -75,14 +80,6 @@ class Card extends React.Component {
       
     </div>
   };
-}
-
-function AddCard(){
-  return (
-    <div className="card_container card_add">
-      <i className="material-icons add_icon">&#xe145;</i>
-    </div>
-  );
 }
 
 export default Layout;
