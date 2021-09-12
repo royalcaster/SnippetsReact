@@ -1,20 +1,19 @@
 import './Layout.css';
 import React from 'react';
 
-const workplace_data = new Map();
+const workplace_data = [];
+var cards = [];
 
 class Layout extends React.Component {
+  constructor() {
+    super();
+    const test = <Card key="1" title="test22" date="test"></Card>;
+    cards.push(test);
+  }
   addCard() {
-    workplace_data.set(workplace_data.size+1,[workplace_data.size+1,"Arbeitsplatz " + (workplace_data.size+1), new Date()]);
-    console.log(workplace_data.get(workplace_data.size)[2]);
+          cards = [];
   }
   render() {
-    const cards = [];
-
-    for (let i = 0; i <workplace_data.size; i++) {
-      cards.push(<Card id={workplace_data.get(i+1)[0]} title={workplace_data.get(i+1)[1]} date={workplace_data.get(i+1)[2]}></Card>);
-    }
-
     return (
     <div className="Body">
       <div className="Navbar">
@@ -28,10 +27,10 @@ class Layout extends React.Component {
           <i className="material-icons add_icon">&#xe145;</i>
         </div>
         {cards}
+        {cards.length}
       </div>
     </div>
-  );
-  }
+  );}
 }
 
 function MainTitle(){
@@ -46,6 +45,7 @@ class Card extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      key: this.props.key,
       title: this.props.title,
       date: this.props.date,
       renamed: false
